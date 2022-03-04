@@ -11,3 +11,10 @@ export const CarrierBody: Record<number, BodyPartConstant[]> = {
   3: [CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
   4: [CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE]
 };
+
+export const CreepsCount: Record<number, number> = {
+  1: 4,
+  2: 8,
+  3: 12,
+  4: 16
+};

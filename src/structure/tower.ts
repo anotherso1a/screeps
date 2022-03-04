@@ -10,12 +10,12 @@ export const towerWork = () => {
         return t.attack(enemy[0]);
       }
       // 维修
-      const needsRepair = t.pos.findInRange(FIND_MY_STRUCTURES, 20, {
-        filter: s => s.hitsMax !== s.hits
-      });
-      if (needsRepair.length) {
-        return t.repair(needsRepair[0]);
-      }
+      // const needsRepair = t.pos.findInRange(FIND_MY_STRUCTURES, 20, {
+      //   filter: s => s.hitsMax !== s.hits
+      // });
+      // if (needsRepair.length) {
+      //   return t.repair(needsRepair[0]);
+      // }
       // 回复
       const needsHeal = t.pos.findInRange(FIND_MY_CREEPS, 20, {
         filter: c => c.hitsMax !== c.hits

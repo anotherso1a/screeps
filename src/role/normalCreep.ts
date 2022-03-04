@@ -6,6 +6,7 @@ const BuildList: BuildableStructureConstant[] = [
   STRUCTURE_TOWER,
   STRUCTURE_WALL,
   STRUCTURE_ROAD,
+  STRUCTURE_RAMPART,
   STRUCTURE_CONTAINER
 ]; // 施工list
 // const RepairList = [STRUCTURE_TOWER, STRUCTURE_WALL, STRUCTURE_ROAD]; // 维修list
@@ -44,14 +45,20 @@ function build(creep: Creep, target: ConstructionSite, options?: MoveToOpts) {
 }
 
 export const spawnNormal = () => {
-  if (_.filter(Game.creeps, creep => creep.memory.role == "normal").length < 8) {
+  const normals = _.filter(Game.creeps, creep => creep.memory.role == "normal");
+  if (normals.length < 12) {
     for (const room in Game.rooms) {
       const level = Game.rooms[room].controller?.level;
       const body = level && NormalBody[level];
       for (const s in Game.spawns) {
-        Game.spawns[s].spawnCreep(body || [WORK, CARRY, MOVE], "normal" + Game.time, {
+        const SPAWN_CODE = Game.spawns[s].spawnCreep(body || [WORK, CARRY, MOVE], "normal" + Game.time, {
           memory: { role: "normal", working: false }
         });
+        if (SPAWN_CODE === ERR_NOT_ENOUGH_ENERGY && !normals.length) {
+          Game.spawns[s].spawnCreep([WORK, CARRY, MOVE], "normal" + Game.time, {
+            memory: { role: "normal", working: false }
+          });
+        }
       }
     }
   }

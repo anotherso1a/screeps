@@ -1,14 +1,20 @@
 import { NormalBody } from "constant/body";
 
 export const spawnUpgrader = () => {
-  if (_.filter(Game.creeps, creep => creep.memory.role == "upgrader").length < 1) {
+  const upgraders = _.filter(Game.creeps, creep => creep.memory.role == "upgrader");
+  if (upgraders.length < 1) {
     for (const room in Game.rooms) {
       const level = Game.rooms[room].controller?.level;
       const body = level && NormalBody[level];
       for (const s in Game.spawns) {
-        Game.spawns[s].spawnCreep(body || [WORK, CARRY, MOVE], "upgrader" + Game.time, {
+        const SPAWN_CODE = Game.spawns[s].spawnCreep(body || [WORK, CARRY, MOVE], "upgrader" + Game.time, {
           memory: { role: "upgrader", working: false }
         });
+        if (SPAWN_CODE === ERR_NOT_ENOUGH_ENERGY && !upgraders.length) {
+          Game.spawns[s].spawnCreep([WORK, CARRY, MOVE], "upgrader" + Game.time, {
+            memory: { role: "upgrader", working: false }
+          });
+        }
       }
     }
   }
