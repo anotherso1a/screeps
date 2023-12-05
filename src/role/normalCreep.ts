@@ -10,7 +10,6 @@ const BuildList: BuildableStructureConstant[] = [
   STRUCTURE_CONTAINER
 ]; // 施工list
 // const RepairList = [STRUCTURE_TOWER, STRUCTURE_WALL, STRUCTURE_ROAD]; // 维修list
-
 /**
  * 判断建筑物是否是 需要存储能量的单位
  * @param structure 建筑物
